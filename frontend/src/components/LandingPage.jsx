@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import board from '../assets/Whiteboard.png'
 
-
 const LandingPage = () => {
   return (
     <div className="container d-flex min-vh-100 align-items-center justify-content-center">

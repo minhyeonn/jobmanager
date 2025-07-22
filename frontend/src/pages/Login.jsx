@@ -15,8 +15,6 @@ const Login = () => {
     try {
       const res = await axiosInstance.post('/auth/login', dataObj)
       setError(false)
-      console.log('Token:', res.data.token)
-      console.log('Saving token to localStorage')
       localStorage.setItem('token', res.data.token)
       navigate('/dashboard')
     } catch (err) {
@@ -29,56 +27,39 @@ const Login = () => {
     <>
       <div className="text-center mt-5">
         <form
-          style={{
-            maxWidth: '350px',
-            margin: 'auto',
-            background: '#f8f9fa',
-            padding: '2rem',
-            borderRadius: '10px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.07)'
-          }}
+          style={{ maxWidth: '300px', margin: 'auto' }}
           onSubmit={handleLogin}
         >
           <Link to="/">
-            <img className="mt-4 mb-2" src={logo} height="72px" alt="Logo" />
+            <img className="mt-4" src={logo} height="72px" />
           </Link>
-          <h1 className="mt-2 mb-3 fw-normal" style={{ fontSize: '2rem', color: '#333' }}>
-            Please log in
-          </h1>
+          <h1 className="mt-4 mb-3 fw-normal">Please log in</h1>
           <input
             type="email"
             name="email"
-            className="form-control mb-3"
+            className="form-control"
             placeholder="Email Address"
             required
             autoFocus="true"
-            autoComplete="email"
-            style={{ fontSize: '1rem' }}
           />
           <input
             type="password"
             name="password"
-            className="form-control mb-3"
+            className="form-control"
             placeholder="Password"
             required
-            autoComplete="current-password"
-            style={{ fontSize: '1rem' }}
           />
           <div className="mt-4">
-            <button
-              type="submit"
-              className="btn btn-lg btn-primary w-100"
-              style={{ fontWeight: 'bold', letterSpacing: '1px' }}
-            >
+            <button type="submit" className="btn btn-lg btn-primary w-100">
               Log in
             </button>
-            <p className="mt-3" style={{ fontSize: '0.95rem' }}>
+            <p className="mt-2">
               Don't have an account? <Link to="/signup">Sign up</Link>
             </p>
           </div>
         </form>
         {error && (
-          <div className="alert alert-danger col-6 col-md-2 m-auto mt-3">
+          <div className="alert alert-danger col-6 col-md-2  m-auto">
             Incorrect email or password
           </div>
         )}
@@ -86,5 +67,4 @@ const Login = () => {
     </>
   )
 }
-
 export default Login
