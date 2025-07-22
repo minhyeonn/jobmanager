@@ -24,7 +24,7 @@ const Login = () => {
     }
   }
 
-  return (
+    return (
     <>
       <div className="text-center mt-5">
         <form
@@ -42,6 +42,7 @@ const Login = () => {
             placeholder="Email Address"
             required
             autoFocus="true"
+            autoComplete="email" 
           />
           <input
             type="password"
@@ -49,6 +50,7 @@ const Login = () => {
             className="form-control"
             placeholder="Password"
             required
+            autoComplete="current-password"
           />
           <div className="mt-4">
             <button type="submit" className="btn btn-lg btn-primary w-100">
