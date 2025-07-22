@@ -31,7 +31,8 @@ const Dashboard = () => {
     const getJobs = async () => {
       try {
         const res = await axiosInstance.get('/jobs')
-        setJobs(Array.isArray(res.data.jobs) ? res.data.jobs : [])
+        const jobsData = res.data?.jobs || res.data || []
+        setJobs(Array.isArray(jobsData) ? jobsData : [])
       } catch (err) {
         setJobs([])
         console.log(err)
@@ -78,7 +79,7 @@ const Dashboard = () => {
       </div>
 
       <div className="container d-flex gap-5 flex-wrap justify-content-center">
-        {Array.isArray(jobs) && jobs.map((job) => (
+        {jobs.map((job) => (
           <JobCard job={job} key={job._id} />
         ))}
       </div>
