@@ -15,6 +15,7 @@ const Login = () => {
     try {
       const res = await axiosInstance.post('/auth/login', dataObj)
       setError(false)
+      console.log(res.data)
       localStorage.setItem('token', res.data.token)
       navigate('/dashboard')
     } catch (err) {
