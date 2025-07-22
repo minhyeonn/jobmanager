@@ -15,59 +15,59 @@ const Login = () => {
     try {
       const res = await axiosInstance.post('/auth/login', dataObj)
       setError(false)
-      console.log(res.data)
+      console.log('Token:', res.data.token)
+      console.log('Saving token to localStorage')
       localStorage.setItem('token', res.data.token)
       navigate('/dashboard')
     } catch (err) {
       console.log(err)
       setError(true)
     }
-  }
 
     return (
-    <>
-      <div className="text-center mt-5">
-        <form
-          style={{ maxWidth: '300px', margin: 'auto' }}
-          onSubmit={handleLogin}
-        >
-          <Link to="/">
-            <img className="mt-4" src={logo} height="72px" />
-          </Link>
-          <h1 className="mt-4 mb-3 fw-normal">Please log in</h1>
-          <input
-            type="email"
-            name="email"
-            className="form-control"
-            placeholder="Email Address"
-            required
-            autoFocus="true"
-            autoComplete="email" 
-          />
-          <input
-            type="password"
-            name="password"
-            className="form-control"
-            placeholder="Password"
-            required
-            autoComplete="current-password"
-          />
-          <div className="mt-4">
-            <button type="submit" className="btn btn-lg btn-primary w-100">
-              Log in
-            </button>
-            <p className="mt-2">
-              Don't have an account? <Link to="/signup">Sign up</Link>
-            </p>
-          </div>
-        </form>
-        {error && (
-          <div className="alert alert-danger col-6 col-md-2  m-auto">
-            Incorrect email or password
-          </div>
-        )}
-      </div>
-    </>
-  )
-}
-export default Login
+      <>
+        <div className="text-center mt-5">
+          <form
+            style={{ maxWidth: '300px', margin: 'auto' }}
+            onSubmit={handleLogin}
+          >
+            <Link to="/">
+              <img className="mt-4" src={logo} height="72px" />
+            </Link>
+            <h1 className="mt-4 mb-3 fw-normal">Please log in</h1>
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              placeholder="Email Address"
+              required
+              autoFocus="true"
+              autoComplete="email"
+            />
+            <input
+              type="password"
+              name="password"
+              className="form-control"
+              placeholder="Password"
+              required
+              autoComplete="current-password"
+            />
+            <div className="mt-4">
+              <button type="submit" className="btn btn-lg btn-primary w-100">
+                Log in
+              </button>
+              <p className="mt-2">
+                Don't have an account? <Link to="/signup">Sign up</Link>
+              </p>
+            </div>
+          </form>
+          {error && (
+            <div className="alert alert-danger col-6 col-md-2  m-auto">
+              Incorrect email or password
+            </div>
+          )}
+        </div>
+      </>
+    )
+  }
+  export default Login
