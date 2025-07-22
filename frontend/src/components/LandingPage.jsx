@@ -21,17 +21,18 @@ const LandingPage = () => {
         <div className="col-md-5">
           <h1 className="display-1 text-center mt-4">JOB MANAGER</h1>
           <p className="mt-4">
-            Take charge of your workday with Job Manager — the easiest way to organize, 
-            track, and prioritize your tasks. Whether you're juggling freelance projects, 
-            client work, or team assignments, our clean and intuitive dashboard keeps you 
-            focused and on schedule. Add, update, and complete jobs effortlessly 
-            — all in one place.
+            Take control of your workday with Job Manager — the simplest way to
+            organize, track, and prioritize your jobs. Whether you're managing
+            freelance gigs, client tasks, or team projects, our intuitive
+            dashboard helps you stay focused and never miss a deadline. Add,
+            update, and complete jobs with ease — all in one place.
           </p>
           <p>
-            Built for professionals who value clarity and control, Job Manager streamlines 
-            your workflow so you can focus on getting things done. From job creation to 
-            progress tracking, you’ll always know your next step. Start today and discover 
-            a smarter, simpler way to manage your workload.
+            Designed for professionals who want clarity and control, Job Manager
+            streamlines your workflow so you can focus on getting things done.
+            From job creation to progress tracking, you’ll always know what’s
+            next. Get started today and experience a smarter way to manage your
+            workload.
           </p>
           <button
             className="btn btn-lg btn-primary d-block"
