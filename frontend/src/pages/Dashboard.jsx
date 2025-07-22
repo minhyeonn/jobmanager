@@ -1,102 +1,89 @@
-import { Link, useNavigate } from 'react-router-dom'
-import logo from '../assets/letter-j.png'
+import { useEffect, useState } from 'react'
 import axiosInstance from '../utils/axios'
-import { useState } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+import logo from '../assets/letter-j.png'
+import JobCard from '../components/JobCard'
 
-const Signup = () => {
+const Dashboard = () => {
   const navigate = useNavigate()
-  const [error, setError] = useState(false)
+  const [jobs, setJobs] = useState([])
 
-  const handleSignup = async (e) => {
+  const addJob = async (e) => {
     e.preventDefault()
-    const data = new FormData(e.currentTarget)
+    const form = e.currentTarget
+    const data = new FormData(form)
     const dataObj = Object.fromEntries(data)
-
+    form.reset()
     try {
-      const res = await axiosInstance.post('/auth/register', dataObj)
-      setError(false)
-      localStorage.setItem('token', res.data.token)
-      navigate('/dashboard')
+      const res = await axiosInstance.post('/jobs', dataObj)
+      const newJobs = [...jobs, res.data.job]
+      setJobs(newJobs)
     } catch (err) {
-      setError(true)
+      console.log(err)
     }
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    navigate('/')
+  }
+  useEffect(() => {
+    const getJobs = async () => {
+      try {
+        const res = await axiosInstance.get('/jobs')
+        const jobsData = res.data?.jobs || res.data || []
+        setJobs(Array.isArray(jobsData) ? jobsData : [])
+      } catch (err) {
+        setJobs([])
+        console.log(err)
+      }
+    }
+
+    getJobs()
+  }, [])
+
   return (
-    <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh', background: '#eef2f7' }}>
-      <div style={{
-        width: '100%',
-        maxWidth: 400,
-        background: '#fff',
-        borderRadius: 12,
-        boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
-        padding: '2.5rem 2rem'
-      }}>
-        <div className="text-center mb-4">
-          <Link to="/">
-            <img src={logo} height="64px" alt="Logo" style={{ borderRadius: '50%', background: '#e9ecef', padding: '8px' }} />
+    <>
+      <nav className="navbar bg-dark fixed-top">
+        <div className="container">
+          <a href="#" className="navbar-brand">
+            <img src={logo} width="40px" alt="Logo" />
+          </a>
+          <Link to="/" className="btn btn-lg btn-danger" onClick={handleLogout}>
+            Log out
           </Link>
-          <h2 className="mt-3 mb-2" style={{ fontWeight: 600, color: '#222' }}>Sign Up</h2>
-          <p style={{ color: '#666', fontSize: '1rem' }}>Create your account to start managing jobs.</p>
         </div>
-        <form onSubmit={handleSignup}>
-          <div className="mb-3">
-            <label htmlFor="name" style={{ fontWeight: 500, color: '#444' }}>Name</label>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              className="form-control"
-              placeholder="Your Name"
-              required
-              style={{ fontSize: '1rem', marginTop: '4px' }}
-            />
+      </nav>
+      <div style={{ margin: '7rem' }} className="text-center mb-5">
+        <form style={{ maxWidth: '300px', margin: 'auto' }} onSubmit={addJob}>
+          <input
+            className="form-control"
+            type="text"
+            name="company"
+            placeholder="Company"
+            required
+          />
+          <input
+            className="form-control"
+            type="text"
+            name="position"
+            placeholder="Position"
+            required
+          />
+          <div className="mt-4">
+            <button type="submit" className="btn btn-primary btn-lg w-100">
+              Add
+            </button>
           </div>
-          <div className="mb-3">
-            <label htmlFor="email" style={{ fontWeight: 500, color: '#444' }}>Email</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              className="form-control"
-              placeholder="Email Address"
-              required
-              autoComplete="email"
-              style={{ fontSize: '1rem', marginTop: '4px' }}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" style={{ fontWeight: 500, color: '#444' }}>Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              className="form-control"
-              placeholder="Password"
-              required
-              autoComplete="new-password"
-              style={{ fontSize: '1rem', marginTop: '4px' }}
-            />
-          </div>
-          <button
-            type="submit"
-            className="btn btn-primary w-100"
-            style={{ fontWeight: 'bold', letterSpacing: '1px', fontSize: '1.1rem', marginTop: '10px' }}
-          >
-            Sign up
-          </button>
-          <p className="mt-3 text-center" style={{ fontSize: '0.95rem' }}>
-            Already have an account? <Link to="/login">Log in</Link>
-          </p>
         </form>
-        {error && (
-          <div className="alert alert-danger mt-3 text-center">
-            Could not sign up. Please try again.
-          </div>
-        )}
       </div>
-    </div>
+
+      <div className="container d-flex gap-5 flex-wrap justify-content-center">
+        {jobs.map((job) => (
+          <JobCard job={job} key={job._id} />
+        ))}
+      </div>
+    </>
   )
 }
-
-export default Signup
+export default Dashboard
