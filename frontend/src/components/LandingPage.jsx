@@ -1,17 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import board from '../assets/Whiteboard.png'
 
-const LandingPage = () => {
-  const navigate = useNavigate()
-  const handleGetStarted = () => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      navigate('/dashboard')
-    } else {
-      navigate('/signup')
-    }
-  }
 
+const LandingPage = () => {
   return (
     <div className="container d-flex min-vh-100 align-items-center justify-content-center">
       <div className="row">
@@ -34,12 +25,9 @@ const LandingPage = () => {
             next. Get started today and experience a smarter way to manage your
             workload.
           </p>
-          <button
-            className="btn btn-lg btn-primary d-block"
-            onClick={handleGetStarted}
-          >
+          <Link to="/signup" className="btn btn-lg btn-primary d-block">
             Get Started
-          </button>
+          </Link>
         </div>
       </div>
     </div>
